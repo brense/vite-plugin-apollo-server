@@ -1,0 +1,24 @@
+{
+  "name": "vite-plugin-apollo-server",
+  "version": "0.0.1",
+  "description": "Vite plugin to apply apollo server middleware onto the vite dev server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brense/vite-plugin-apollo-server.git"
+  },
+  "keywords": [
+    "vite",
+    "apollo",
+    "server"
+  ],
+  "author": "Rense Bakker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brense/vite-plugin-apollo-server/issues"
+  },
+  "homepage": "https://github.com/brense/vite-plugin-apollo-server#readme"
+}
