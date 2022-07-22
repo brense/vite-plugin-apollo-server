@@ -2,7 +2,7 @@
   "name": "vite-plugin-apollo-server",
   "version": "0.0.3",
   "description": "Vite plugin to apply apollo server middleware onto the vite dev server",
-  "main": "index.js",
+  "main": "lib-esm/index.js",
   "scripts": {
     "prepublishOnly": "tsc --p tsconfig.npm.json",
     "start": "tsc",
