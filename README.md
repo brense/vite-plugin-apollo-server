@@ -9,7 +9,7 @@ Apply apollo server middleware to the vite dev server
 ## Usage
 
 ```ts
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite'
 import { ApolloServer } from 'apollo-server-express'
 import apolloServerPlugin from 'vite-plugin-apollo-server'
 
