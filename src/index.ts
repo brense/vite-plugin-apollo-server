@@ -1,18 +1,38 @@
-import { ViteDevServer } from 'vite'
 import { ApolloServer } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import type { GraphQLSchema } from 'graphql'
 
-const apolloServerPlugin = ({ apolloServer, path = '/graphql' }: { apolloServer: ApolloServer, path?: string }) => ({
-  name: 'apollo-server',
-  config() {
-    return {
-      server: { proxy: { [path]: {} } },
-      preview: { proxy: { [path]: {} } }
+const apolloServerVitePlugin = ({ apiPath = '/api', schema }: { apiPath?: string, schema: GraphQLSchema }) => {
+  return {
+    name: 'vite-plugin-apollo-server',
+    config() {
+      return {
+        server: {
+          proxy: {
+            [apiPath]: {}
+          }
+        },
+        preview: {
+          proxy: {
+            [apiPath]: {}
+          }
+        }
+      }
+    },
+    async configureServer({ httpServer, middlewares: app }: any) {
+      const apolloServer = new ApolloServer({
+        csrfPrevention: true,
+        cache: 'bounded',
+        schema,
+        plugins: [
+          ApolloServerPluginDrainHttpServer({ httpServer })
+        ],
+      })
+
+      await apolloServer.start()
+      apolloServer.applyMiddleware({ app, path: apiPath })
     }
-  },
-  async configureServer(server: ViteDevServer) {
-    await apolloServer.start()
-    apolloServer.applyMiddleware({ app: server.middlewares as any, path })
   }
-})
+}
 
-export default apolloServerPlugin
+export default apolloServerVitePlugin
