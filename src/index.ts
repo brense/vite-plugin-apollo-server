@@ -26,7 +26,7 @@ const apolloServerVitePlugin = ({ apiPath = '/api', schema, csrfPrevention = tru
         cache,
         schema,
         plugins: [
-          ...config.plugins,
+          ...config.plugins || [],
           ApolloServerPluginDrainHttpServer({ httpServer })
         ],
       })
