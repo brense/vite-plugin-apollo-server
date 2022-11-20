@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/brense/vite-plugin-apollo-server#readme",
   "devDependencies": {
-    "apollo-server-express": "^3.10.0",
     "vite": "^3.0.2"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.1.1"
   }
 }

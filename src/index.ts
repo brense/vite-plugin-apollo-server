@@ -1,8 +1,14 @@
-import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express'
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import { ApolloServer, ApolloServerOptions, BaseContext } from '@apollo/server'
+import { expressMiddleware } from '@apollo/server/express4'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import type { GraphQLSchema } from 'graphql'
 
-const apolloServerVitePlugin = ({ apiPath = '/api', schema, csrfPrevention = true, cache = 'bounded', ...config }: { apiPath?: string, schema: GraphQLSchema } & Omit<ApolloServerExpressConfig, 'typeDefs' | 'schema' | 'resolvers'>) => {
+type Options = Omit<ApolloServerOptions<BaseContext>, 'schema' | 'typeDefs' | 'resolvers'> & Required<Pick<ApolloServerOptions<BaseContext>, 'schema'>> & {
+  apiPath?: string
+  schema: GraphQLSchema
+}
+
+const apolloServerVitePlugin = ({ apiPath = '/api', schema, csrfPrevention = true, ...config }: Options) => {
   return {
     name: 'vite-plugin-apollo-server',
     config() {
@@ -21,18 +27,16 @@ const apolloServerVitePlugin = ({ apiPath = '/api', schema, csrfPrevention = tru
     },
     async configureServer({ httpServer, middlewares: app }: any) {
       const apolloServer = new ApolloServer({
-        ...config,
+        ...config as any,
         csrfPrevention,
-        cache,
         schema,
         plugins: [
           ...config.plugins || [],
           ApolloServerPluginDrainHttpServer({ httpServer })
         ],
       })
-
       await apolloServer.start()
-      apolloServer.applyMiddleware({ app, path: apiPath })
+      app.use(apiPath, expressMiddleware(apolloServer))
     }
   }
 }
