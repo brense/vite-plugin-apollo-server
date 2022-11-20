@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-apollo-server",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Vite plugin to apply apollo server middleware onto the vite dev server",
   "main": "lib-esm/index.js",
   "scripts": {
