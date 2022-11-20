@@ -27,6 +27,7 @@
     "vite": "^3.0.2"
   },
   "dependencies": {
+    "apollo-server-core": "^3.11.1",
     "apollo-server-express": "^3.11.1"
   }
 }
